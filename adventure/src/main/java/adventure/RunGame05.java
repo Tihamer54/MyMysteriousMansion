@@ -5,9 +5,12 @@ import java.util.Scanner;
 /** <h1> Global variables</h1>
  * 
  *  If we make variables global, then any function can use them.
+ *  We are trying to make the functions use any text; we don't want the text data to be "hard-coded"
  *  
  *  We can also simplify the main "if" statement by having the askQuestion function return an integer instead of a string.
  *  This gives the calling function the ability to describe the selection a little better.
+ *  
+ *  At this point, we only have on location, but we do get to make a choice.
  *  
  * @author ttoth-fejel
  *
@@ -28,14 +31,15 @@ public class RunGame05 {
 		
 		System.out.println(startLocation);
 		Integer response = askQuestion(startQuestion);
-		System.out.println("You have decided to: " + startQuestion[response-1]);
-		System.out.println("response==1 is " + (response==1));  // The condition containing a mathematical operation has parentheses around to keep from being interpreted as a string.
+		System.out.println("You have decided to: " + response + ". " + ((response>=4) ? "Choose an illegal response.  Are you trying to hack this game?" : startQuestion[response-1]));
 		if (response==1) {
 			System.out.println("There is a low plastic gate blocking your path.");
 		} else if (response==2) {
 			System.out.println("Your ride does not notice you and leaves you in the dust. It is darker now.");
-		} else if (response==1) {
-			System.out.println("After an hour of walking, you realize that the light you saw was the moon rising. It is much darker now.");
+		} else if (response==3) {
+			System.out.println("After an hour of walking, you realize that the light you saw was only the moon rising. It is much darker now.");
+		} else if (response==4) {
+			System.out.println("You are a smarty pants, and have stepped into cold, wet mud, because you can't go in that direction. It is much darker now. And you have cold, wet feet.");
 		} else {
 			System.out.println("Nothing happens.");
 		}
@@ -45,6 +49,7 @@ public class RunGame05 {
 	public static Integer askQuestion(String[] options) {
 		return askQuestion(options[0], options[1], options[2]);
 	}
+	
 	
 	public static Integer askQuestion(String option1, String option2, String option3) {
 		Scanner input = new Scanner(System.in);
@@ -60,9 +65,11 @@ public class RunGame05 {
 			return 2;
 		} else if (stringResponse.equals("3") || stringResponse.equals("E") || stringResponse.equals("e") ) {
 			return 3;
-		} else {
+		} else if (stringResponse.equals("4") || stringResponse.equals("S") || stringResponse.equals("s") ) {
+			return 4;
+		}else {
 			System.out.println("Invalid response.");
-			return 1000;
+			return 999;
 		}
 	}
 	
@@ -70,7 +77,6 @@ public class RunGame05 {
 	public static void main(String[] args) {
 		runGame();
 	}
-	
 	
 }
 
